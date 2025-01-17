@@ -6,7 +6,7 @@ export class PollingManager {
     private isPolling: boolean;
     private lastParams: Record<string, any>;
 
-    constructor(pipeline: Pipeline, pollIntervalMinutes: number, initialParams: Record<string, any>) {
+    constructor(pipeline: Pipeline, pollIntervalMinutes: number) {
         this.pipeline = pipeline;
         this.pollIntervalMs = pollIntervalMinutes * 60 * 1000;
         this.isPolling = false;
@@ -20,7 +20,6 @@ export class PollingManager {
             try {
                 // Dynamically construct parameters
                 const newParams = this.constructNextParams(this.lastParams);
-
                 console.log(`Polling with params: ${JSON.stringify(newParams)}`);
                 await this.pipeline.run(newParams);
                 this.lastParams = newParams; // Update for next poll
